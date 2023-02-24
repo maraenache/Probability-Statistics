@@ -1,0 +1,154 @@
+b5
+
+#C2
+
+exista = function(f, n)
+{
+  for(i in 1:n)
+    if(f[i] == -1) return (i)
+  
+  return (-1)
+}
+
+prefera = function(j, mi, mh, W)
+{
+ poz_mi = -1
+ poz_mh = -1
+  
+  for(i in 1:3)
+    if(W[j, i] == mi)
+    {
+        poz_mi = i
+    }
+    else if(W[j, i] == mh)
+     {
+       poz_mh = i
+     }
+
+  if(poz_mi != -1 && poz_mi < poz_mh) return (1)
+  else return (0)
+}
+
+C2 = function(n, M, W)
+{
+f = vector(length = n)
+f_inv = vector(length = n)
+
+for(i in 1:n)
+{
+  f[i] = -1
+  f_inv[i] =-1
+}
+
+while(exista(f, n) != -1)
+{
+  mi = exista(f, n)
+  j = sample(1:n, 1)
+  
+  if(f_inv[j] != -1 && prefera(j, mi, f_inv[j], W))
+  {
+    f[f_inv[j]] = -1
+    f[mi] = j
+    f_inv[j] = mi
+  }
+  
+  if(f_inv[j] == -1)
+  {
+    f[mi] = j
+    f_inv[j] = mi
+  }
+}
+
+print(f)
+print(f_inv)
+}
+
+n = 3
+
+m = c(3,2,1,3,1,2,1,2,3)
+w = c(2, 3, 1,3,2,1,2,1,3)
+
+M = matrix(m, 3, 3, byrow = TRUE)
+W = matrix(w, 3, 3, byrow = TRUE)
+
+print(M)
+print(W)
+
+C2(n, M, W)
+
+
+#de term B5
+
+# C7
+conturi=function()
+{
+  nr_days=1;
+  p=0.25;
+  nr=19;
+  nr=nr-rbinom(1,19,0.25);
+  print(nr);
+  while(nr>0&nr<20)
+  {
+    nr_days=nr_days+1;
+    p=1-0.75^(20-nr);
+    c=rbinom(1,nr,p);
+    nr=nr-c+5;
+  }
+  return (nr);
+}
+
+MC_toateconturile=function(N)
+{
+  sum=0;
+  for(i in 1:N)
+  {
+    if(conturi()>=20)
+      sum=sum+1;
+  }
+  return (sum/N);
+}
+
+
+
+
+
+
+
+
+
+
+days=1;
+n=length(students)
+calc_infectat=vector()
+cont_inf=vector()
+cont_inf=students-students
+while((existainf(students) != 0)){
+  days = days + 1
+  p=sample(prob, 1)
+  for(i in 1:n){
+    if(students[i] == 0){
+      a=runif(1,0,1)
+      if(a <= p){
+        students[i]=-1
+        cont_inf[i]=1
+        calc_infectat = append(calc_infectat, i)
+      }
+    }
+  }
+  if(days >= 2){
+    nr_treaba=min(nr, length(calc_infectat))
+    curatare=sample(calc_infectat, nr_treaba)
+    for(i in 1:nr_treaba){
+      students[curatare[i]]=0
+      calc_infectat = calc_infectat[!(calc_infectat %in% curatare[i])]
+    }
+  }
+}
+estimated_error_probability=function(p,pr,epsilon)
+{
+  alfa=1-pr;
+  z=qnorm(alfa/2);
+  N_min=(1-p)*p*(z/epsilon)^2;
+  print(N_min);
+}
+
